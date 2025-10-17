@@ -6,7 +6,26 @@ The AVI format allows recordings to replay at the correct frame rate on media pl
 If a microphone is installed, a WAV file is also created and stored in the AVI file.
 
 ---
+## **Hardware Setup and Implementation**
 
+Below are images showing the ESP32-CAM module connections, pan-tilt servo mechanism, and the user interface of the surveillance system.
+
+### 🔧 **Circuit Wiring (ESP32-CAM with Pan–Tilt Servos)**
+![ESP32-CAM Servo Connection](https://github.com/pratik001010/ESP32-CAM-Outdoor-Surveillance-System/blob/14cc018743f9c32e5982c1523afc98c10f022f90/ESp32-cam.png)
+
+---
+
+### ⚙️ **System Prototype Assembly**
+![ESP32-CAM Prototype Front View](https://github.com/pratik001010/ESP32-CAM-Outdoor-Surveillance-System/blob/14cc018743f9c32e5982c1523afc98c10f022f90/esp32cam1.png)
+
+![ESP32-CAM Prototype Close-up](https://github.com/pratik001010/ESP32-CAM-Outdoor-Surveillance-System/blob/14cc018743f9c32e5982c1523afc98c10f022f90/esp32cam2.jpg)
+
+---
+
+### 🖥️ **Web Interface (Camera Control Panel)**
+![ESP32-CAM UI](https://github.com/pratik001010/ESP32-CAM-Outdoor-Surveillance-System/blob/14cc018743f9c32e5982c1523afc98c10f022f90/ui%20esp32%20cam.png)
+
+---
 ## **Changes for version 8.0**
 - Compiled for **arduino-esp32 v2.0.6**  
 - Support for **ESP32S3** (much better than ESP32)  
