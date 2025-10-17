@@ -1,47 +1,65 @@
-# ESP32-CAM_MJPEG2SD
 
-ESP32 / ESP32S3 Camera application to record JPEGs to SD card as AVI files and playback to browser as an MJPEG stream. The AVI format allows recordings to replay at correct frame rate on media players. If a microphone is installed then a WAV file is also created and stored in the AVI file.
- 
-Changes for version 8.0:
-- compiled for arduino-esp32 v2.0.6
-- support for ESP32S3 (much better than ESP32)
-- simultaneous Wifi Station and AP mode
-- lamp has variable intensity
-- internal code restructuring.
+# **ESP32-CAM-Outdoor-Surveillance-System**
 
-Changes up to version 8.4:
-- Web page improvements and jQuery removed.
-- Support for OV5640 and OV3660 cameras, but see [**OV5640**](#ov5640) section below.
-- Spurious error [message](https://github.com/s60sc/ESP32-CAM_MJPEG2SD/issues/155) removed. 
-- fix for [timezone](https://github.com/s60sc/ESP32-CAM_MJPEG2SD/issues/150). 
-- fix for unwanted [APs](https://github.com/s60sc/ESP32-CAM_MJPEG2SD/issues/144). 
-- NTP server [configurable](https://github.com/s60sc/ESP32-CAM_MJPEG2SD/issues/151). 
+ESP32 / ESP32S3 Camera application to record JPEGs to SD card as AVI files and playback to a browser as an MJPEG stream.  
+The AVI format allows recordings to replay at the correct frame rate on media players.  
+If a microphone is installed, a WAV file is also created and stored in the AVI file.
 
+---
 
-## Purpose
+## **Changes for version 8.0**
+- Compiled for **arduino-esp32 v2.0.6**  
+- Support for **ESP32S3** (much better than ESP32)  
+- Simultaneous **Wi-Fi Station** and **AP mode**  
+- Lamp with **variable intensity**  
+- Internal code restructuring  
 
-The application enables video capture of motion detection or timelapse recording. Examples include security cameras or wildlife monitoring.  This [instructable](https://www.instructables.com/How-to-Make-a-WiFi-Security-Camera-ESP32-CAM-DIY-R/) by [Max Imagination](https://www.instructables.com/member/Max+Imagination/) shows how to build a WiFi Security Camera using an earlier version of this code.
+---
 
-Saving a set of JPEGs as a single file is faster than as individual files and is easier to manage, particularly for small image sizes. Actual rate depends on quality and size of SD card and complexity and quality of images. A no-name 4GB SDHC labelled as Class 6 was 3 times slower than a genuine Sandisk 4GB SDHC Class 2. The following recording rates were achieved on a freshly formatted Sandisk 4GB SDHC Class 2 on a AI Thinker OV2640 board, set to maximum JPEG quality and highest clock rate.
+## **Changes up to version 8.4**
+- Web page improvements and **jQuery removed**  
+- Support for **OV5640** and **OV3660** cameras (see [OV5640](#ov5640) section below)  
+- Spurious error message removed  
+- Fix for timezone  
+- Fix for unwanted access points (APs)  
+- **NTP server configurable**
 
-Frame Size | OV2640 camera max fps | mjpeg2sd max fps | Detection time ms
------------- | ------------- | ------------- | -------------
-96X96 | 50 | 45 |  15
-QQVGA | 50 | 45 |  20
-QCIF  | 50 | 45 |  30
-HQVGA | 50 | 45 |  40
-240X240 | 50 | 45 |  55
-QVGA | 50 | 40 |  70
-CIF | 50 | 40 | 110
-HVGA | 50 | 40 | 130
-VGA | 25 | 20 |  80
-SVGA | 25 | 20 | 120
-XGA | 12.5 | 5 | 180
-HD | 12.5 | 5 | 220
-SXGA | 12.5 | 5 | 300
-UXGA | 12.5 | 5 | 450
+---
 
-The ESP32S3 (using Freenove ESP32S3 Cam board hosting ESP32S3 N8R8 module) runs the app about double the speed of the ESP32 mainly due to much faster PSRAM. It can record at the maximum OV2640 frame rates including [audio](#audio-recording) for all frame sizes except UXGA (max 10fps).
+## **Purpose**
+
+The application enables video capture of motion detection or timelapse recording.  
+Examples include security cameras or wildlife monitoring.  
+This [Instructable by Pratik Khadka](https://www.instructables.com/) shows how to build a WiFi Security Camera using an earlier version of this code.
+
+Saving a set of JPEGs as a single file is faster than as individual files and easier to manage, particularly for small image sizes.  
+Actual recording rate depends on the SD card’s quality, capacity, and the complexity of images.  
+
+A no-name 4GB SDHC (Class 6) was found to be 3× slower than a genuine Sandisk 4GB SDHC (Class 2).  
+The following recording rates were achieved on a freshly formatted Sandisk 4GB SDHC Class 2 on an **AI Thinker OV2640 board**, set to maximum JPEG quality and highest clock rate.
+
+---
+
+Frame Size | OV2640 Camera Max FPS | MJPEG2SD Max FPS | Detection Time (ms)
+------------ | -------------------- | ---------------- | ------------------
+96×96 | 50 | 45 | 15  
+QQVGA | 50 | 45 | 20  
+QCIF | 50 | 45 | 30  
+HQVGA | 50 | 45 | 40  
+240×240 | 50 | 45 | 55  
+QVGA | 50 | 40 | 70  
+CIF | 50 | 40 | 110  
+HVGA | 50 | 40 | 130  
+VGA | 25 | 20 | 80  
+SVGA | 25 | 20 | 120  
+XGA | 12.5 | 5 | 180  
+HD | 12.5 | 5 | 220  
+SXGA | 12.5 | 5 | 300  
+UXGA | 12.5 | 5 | 450  
+
+---
+
+The ESP32S3 (using Freenove ESP32S3 Cam board hosting ESP32S3 N8R8 module) runs the app about double the speed of the ESP32 mainly due to much faster PSRAM. It can record at the maximum OV2640 frame rates including audio for all frame sizes except UXGA (max 10fps).
 
 ## Design
 
@@ -63,8 +81,7 @@ Compile with PSRAM enabled and the following Partition scheme:
 * ESP32 - `Minimal SPIFFS (...)`
 * ESP32S3 - `8M with spiffs (...)`
 
-**NOTE: If you get compilation errors you need to update your `arduino-esp32` library in the IDE 
-using [Boards Manager](https://github.com/s60sc/ESP32-CAM_MJPEG2SD/issues/61#issuecomment-1034928567)**
+
 
 The application web pages and configuration data file (except passwords) are stored in the **/data** folder which needs to be copied as a folder to the SD card, or automatically downloaded from GitHub on app startup. This reduces the size of the application on flash and reduces wear as well as making updates easier.
 
@@ -138,8 +155,6 @@ Note that there are not enough free pins on the ESP32 camera module to allow all
 * pin 4: Also used for onboard lamp. Lamp can be disabled by removing its current limiting resistor. 
 * pin 12: Only use as output pin.
 * pin 33: Used by onboard red LED. Not broken out, but can repurpose the otherwise pointless VCC pin by removing its adjacent resistor marked 3V3, and the red LED current limiting resistor, then running a wire between the VCC pin and the red LED resistor solder tab.  
-
-Can also use the [ESP32-IO_Extender](https://github.com/s60sc/ESP32-IO_Extender) repository.  
 
 The ESP32S3 Freenove board can support all of the above peripherals with its spare pins.
 
